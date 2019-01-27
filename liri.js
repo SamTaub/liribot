@@ -10,13 +10,18 @@ if (process.argv[2] === "spotify-this-song") {
     callSpotify();
 };
 
+if (process.argv[2] === "do-what-it-says") {
+    doSay();
+};
+
 function callMovie() {
 
     var axios = require("axios");
     var movieNodeArgs = process.argv;
-    var movieTitle = "";
+    var movieTitle = "Mr. Nobody";
 
     for (var i = 3; i < movieNodeArgs.length; i++) {
+        movieTitle = "";
         if (i > 3 && i < movieNodeArgs.length) {
             movieTitle = movieTitle + "+" + movieNodeArgs[i];
         }
@@ -29,7 +34,7 @@ function callMovie() {
 
     axios.get(queryUrl).then(
         function (response) {
-            console.log("Movie Title: " + response.data.Title);
+            console.log("\nMovie Title: " + response.data.Title);
             console.log("Release Year: " + response.data.Year);
             console.log("IMDB Rating: " + response.data.imdbRating);
             console.log("Rotten Tomatoes Rating: " + JSON.stringify(response.data.Ratings[1].Value));
@@ -82,9 +87,10 @@ function callSpotify() {
     var Spotify = require('node-spotify-api');
     var spotify = new Spotify(keys.spotify);
     var spotifyNodeArgs = process.argv;
-    var songTitle = "";
+    var songTitle = "The Sign US Album Remastered";
 
     for (var i = 3; i < spotifyNodeArgs.length; i++) {
+        songTitle = "";
         if (i > 3 && i < spotifyNodeArgs.length) {
             songTitle = songTitle + "+" + spotifyNodeArgs[i];
         }
@@ -93,25 +99,32 @@ function callSpotify() {
         }
     };
 
-    spotify.search({ type: 'track', limit: 5, query: songTitle }, function (err, data) {
+    spotify.search({ type: 'track', limit: 3, query: songTitle }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
+        console.log("\nArtist: " + data.tracks.items[0].album.artists[0].name);
+        console.log("Song: " + data.tracks.items[0].name);
+        console.log("Preview: " + data.tracks.items[0].preview_url);
+        console.log("Album: " + data.tracks.items[0].album.name);
+    });
+};
 
-        var resultCounter = 0;
+function doSay() {
 
-        console.log("Top results for: " + songTitle)
+    var fs = require('fs');
 
-        for (var i = 0; i < data.tracks.items.length; i++) {
+    fs.readFile("random.txt", "utf8", function (error, data) {
 
-            resultCounter++;
-
-            console.log("\n");
-            console.log("#" + resultCounter)
-            console.log("Artist: " + data.tracks.items[i].album.artists[0].name);
-            console.log("Song: " + data.tracks.items[i].name);
-            console.log("Preview: " + data.tracks.items[i].preview_url);
-            console.log("Album: " + data.tracks.items[i].album.name);
+        if (error) {
+            console.log(error);
         }
+
+        var randomArray = data.split(",");
+
+        var songTitle = randomArray[1];
+
+
+
     });
 };
