@@ -1,5 +1,8 @@
 # Liri Bot
 
+* Video Demo: [https://drive.google.com/file/d/1x6wFbV-_BTG2L_hiqX-XN2xRiFuLcOa8/view]
+* GitHub Repository: [https://github.com/SamTaub/liribot]
+
 ### Description
 
 The Liri Bot is a tool that can search for Movies, Concerts, and Songs.  It uses node.js to call API's and generate results based on a users search.  Liri searchs OMDB for Movies, Bands in Town for Concerts, and Spotify for songs.

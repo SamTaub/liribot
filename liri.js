@@ -99,7 +99,6 @@ function doSay() {
     var keys = require("./keys.js");
     var Spotify = require('node-spotify-api');
     var spotify = new Spotify(keys.spotify);
-    var spotifyNodeArgs = process.argv;
     //When the function is run, it reads "random.txt" to determine search parameters for the spotify API.
     fs.readFile("random.txt", "utf8", function (error, data) {
         //Logs an error to the terminal if the function fails to run.
